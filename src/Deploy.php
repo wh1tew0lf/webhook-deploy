@@ -155,7 +155,7 @@ EOL;
             return;
         }
         $cmd = <<<EOL
-cd {$this->_repositoryPath} && 
+cd {$this->_repositoryPath} &&
 {$this->_beforeUpdateHook}
 EOL;
         exec($cmd, $output, $return);
@@ -168,12 +168,13 @@ EOL;
     protected function _applyDevChanges() {
         $this->_log->log(Log::lTrace, "applyDevChanges");
         $cmd = <<<EOL
-cd {$this->_repositoryPath} && 
+cd {$this->_repositoryPath} &&
 GIT_WORK_TREE='{$this->_repositoryPath}' git checkout {$this->_branch} &&
 GIT_WORK_TREE='{$this->_repositoryPath}' git pull origin {$this->_branch} &&
 GIT_WORK_TREE='{$this->_repositoryPath}' git push origin {$this->_branch} &&
 GIT_WORK_TREE='{$this->_repositoryPath}' git checkout {$this->_serverBranch} &&
-GIT_WORK_TREE='{$this->_repositoryPath}' git merge {$this->_branch}
+GIT_WORK_TREE='{$this->_repositoryPath}' git merge {$this->_branch} &&
+GIT_WORK_TREE='{$this->_repositoryPath}' git push origin {$this->_serverBranch}
 EOL;
         exec($cmd, $output, $return);
 
