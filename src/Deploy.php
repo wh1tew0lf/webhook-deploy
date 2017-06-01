@@ -166,7 +166,7 @@ EOL;
     }
 
     protected function _applyDevChanges() {
-        $this->_log->log(Log::lTrace, "applyServerChanges");
+        $this->_log->log(Log::lTrace, "applyDevChanges");
         $cmd = <<<EOL
 cd {$this->_repositoryPath} && 
 GIT_WORK_TREE='{$this->_repositoryPath}' git checkout {$this->_branch} &&
@@ -177,7 +177,7 @@ EOL;
         exec($cmd, $output, $return);
 
         if ($return) {
-            throw new \Exception("applyServerChanges: git return {$return}");
+            throw new \Exception("applyDevChanges: git return {$return}");
         }
     }
 
