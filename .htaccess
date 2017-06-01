@@ -1,12 +1,12 @@
 DirectoryIndex index.php index.html
 
-#<Limit GET POST>
-#    order deny,allow
-#    deny from all
-#
-#    # IP rangs of bitbucket:
-#    # 104.192.143.0/24
-#    # See https://confluence.atlassian.com/bitbucket/manage-webhooks-735643732.html
-#
-#    allow from 104.192.143.0/24
-# </Limit>
+<Limit GET POST>
+    order deny,allow
+    deny from all
+
+    # IP rangs of bitbucket:
+    # 104.192.143.0/24
+    # See https://confluence.atlassian.com/bitbucket/manage-webhooks-735643732.html
+
+    allow from 104.192.143.0/24
+ </Limit>
