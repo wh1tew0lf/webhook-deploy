@@ -28,7 +28,7 @@ class Deploy extends Component {
 
     public function run($get, $post, $server) {
         $this->_log->log(Log::lTrace, "Start deploy");
-        if (!empty($this->_secret) && !empty($get) && ($get !== $this->_secret))  {
+        if (!empty($this->_secret) && !empty($get['secret']) && ($get['secret'] !== $this->_secret))  {
             $this->_log->log(Log::lWarning, "Incorrect or empty secret key!");
             return null;
         }
