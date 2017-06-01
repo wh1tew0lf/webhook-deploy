@@ -41,12 +41,13 @@ class Deploy extends Component {
 
         if ($this->_analyzeHook($post, $server)) {
             $this->_beforeDevChanges();
-            // $this->_applyDevChanges();
+            $this->_applyDevChanges();
             $this->_afterDevChanges();
+            $this->_notification->notificate("Deploy success" . ($wasServerChanges ? " <b>There was server changes</b>" : ''));
         }
 
         $this->_log->log(Log::lTrace, "Finish deploy");
-        $this->_notification->notificate("Deploy success" . ($wasServerChanges ? " <b>There was server changes</b>" : ''));
+        echo "Done";
     }
 
     protected function _isServerChangesExists() {
@@ -108,7 +109,8 @@ EOL;
         $headers = [
             'HTTP_X_EVENT_KEY',
             'HTTP_USER_AGENT',
-            'REMOTE_ADDR'
+            'REMOTE_ADDR',
+            'HTTP_X_ATTEMPT_NUMBER'
         ];
 
         foreach ($headers as $header) {
@@ -116,6 +118,11 @@ EOL;
                 $this->_log->log(Log::lWarning, "No header {$header}");
                 return false;
             }
+        }
+
+        if (1 != $server['HTTP_X_ATTEMPT_NUMBER']) {
+            $this->_log->log(Log::lTrace, "It isn't first attempt we can cancel it");
+            return false;
         }
 
         if (isset($post['payload'])) {
