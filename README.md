@@ -1,2 +1,2 @@
 # webhook-deploy
-Codebase for auto deploy at by webhooks
+Codebase for auto deploy at remote server by webhooks
