@@ -57,8 +57,14 @@ class Deploy extends Component {
             throw new \Exception("isServerChangesExists: git branch return {$return}");
         }
 
-        $branch = trim(trim(implode('', $output), '*'));
-        $this->_log->log(Log::lTrace, "Current branch is: {$branch}");
+        $branch = '';
+        foreach ($output as $line) {
+            if (strstr($line, '*')) {
+                $branch = trim(trim($line, '*'));
+                $this->_log->log(Log::lTrace, "Current branch is: {$branch}");
+                break;
+            }
+        }
 
         if ($branch != $this->_serverBranch) {
             throw new \Exception("Incorrect branch on server {$branch}");
