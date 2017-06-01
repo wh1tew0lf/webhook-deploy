@@ -1,0 +1,19 @@
+{
+    "name": "wh1tew0lf/webhook-deploy",
+    "description": "Codebase for auto deploy at remote server by webhooks",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Volkov Danil",
+            "email": "vlkv.d.a@gmail.com"
+        }
+    ],
+    "config": {
+        "vendor-dir": "src/vendor"
+    },
+    "autoload": {
+        "psr-4": {"wh1te_w0lf\\webhook_deploy\\": "src/"}
+    },
+    "require": {}
+}
