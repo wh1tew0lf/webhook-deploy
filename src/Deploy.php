@@ -51,20 +51,24 @@ class Deploy extends Component {
 
     protected function _isServerChangesExists() {
         $this->_log->log(Log::lTrace, "isServerChangesExists");
+        $cmd = "cd {$this->_repositoryPath} && GIT_WORK_TREE='{$this->_repositoryPath}' git branch";
+        exec($cmd, $output, $return);
+        if ($return) {
+            throw new \Exception("isServerChangesExists: git branch return {$return}");
+        }
+
+        $branch = trim(trim(implode('', $output), '*'));
+        $this->_log->log(Log::lTrace, "Current branch is: {$branch}");
+
+        if ($branch != $this->_serverBranch) {
+            throw new \Exception("Incorrect branch on server {$branch}");
+        }
+
+
         $cmd = "cd {$this->_repositoryPath} && GIT_WORK_TREE='{$this->_repositoryPath}' git status";
         exec($cmd, $output, $return);
         if ($return) {
             throw new \Exception("isServerChangesExists: git status return {$return}");
-        }
-
-        $branch = '';
-        if (isset($output[0]) && strstr(strtolower($output[0]), 'on branch')) {
-            $branch = trim(str_replace('on branch', '', strtolower($output[0])));
-            $this->_log->log(Log::lTrace, "Current branch is: {$branch}");
-        }
-
-        if ($branch != $this->_serverBranch) {
-            throw new \Exception("Incorrect branch on server {$branch}");
         }
 
         foreach ($output as $line) {
